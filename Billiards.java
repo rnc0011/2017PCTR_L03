@@ -22,7 +22,9 @@ public class Billiards extends JFrame {
 
 	// TODO update with number of group label. See practice statement.
 	private final int N_BALL = 3 + 3;
-	private Ball[] balls;
+	
+	private Ball[N_BALL] balls;
+	protected Thread[N_BALL] threads;
 
 	public Billiards() {
 
@@ -55,9 +57,49 @@ public class Billiards extends JFrame {
 	}
 
 	private void initBalls() {
-		for (i = 0; i < N_BALL; i++){
-			Ball[i] = new Ball();
+		for (i = 0; i < this.N_BALL; i++){
+			balls[i] = new Ball();
 		}
+	}
+	
+	protected Thread makeThread (final Ball bola){
+		Runnable bucle = new Runnable() {
+			public void run(){
+				try {
+					for(;;) {
+						bola.move();
+						board.paint();
+					}
+				} catch (InterruptedException e){
+					return;
+				}
+			}
+		};
+		return new Thread (bucle);
+	}
+	
+	public synchronized void start () {
+		if (threads == null) {
+			this.initBalls();
+			this.board.setBalls(balls);
+			for (int i = 0; i < this.N_BALL;i++){
+				this.threads[i] = makeThread(balls[i])
+				this.threads[i].start(); 
+			}
+		} 
+	}
+	
+	public synchronized void stop() {
+		if (threads != null) {
+			for (int i; i < threads.lenght; i++){
+				threads[1].interrupt();
+				threads = null;
+			}
+		}
+	}
+	
+	public void finalize(){
+		this.stop();
 	}
 	
 	private class StartListener implements ActionListener {

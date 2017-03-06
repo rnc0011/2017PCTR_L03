@@ -20,7 +20,7 @@ public class Ball {
 		fi = Math.random() * Math.PI * 2;
 	}
 
-	public void move() {
+	public synchronized void move() {
 		v = v * Math.exp(-v / 1000);
 		dx = v * Math.cos(fi);
 		dy = v * Math.sin(fi);
@@ -35,7 +35,7 @@ public class Ball {
 		assertTrue(y < Board.TOPBOARD && y > Board.BOTTOMBOARD);
 	}
 
-	public void reflect() {
+	public synchronized void reflect() {
 		if (Math.abs(x + 32 - Board.RIGHTBOARD) < Math.abs(dx)) {
 			fi = Math.PI - fi;
 		}
@@ -48,6 +48,7 @@ public class Ball {
 		if (Math.abs(y - Board.TOPBOARD) < Math.abs(dy)) {
 			fi = -fi;
 		}
+		
 		// TODO Check postcondition
 		assertTrue(x < Board.RIGTHBOARD && x > Board.LEFTBOARD);
 		assertTrue(y < Board.TOPBOARD && y > Board.BOTTOMBOARD);
@@ -80,5 +81,7 @@ public class Ball {
 	public Image getImage() {
 		return image;
 	}
+	
+	
 
 }
