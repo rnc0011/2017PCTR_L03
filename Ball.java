@@ -49,6 +49,8 @@ public class Ball {
 			fi = -fi;
 		}
 		// TODO Check postcondition
+		assertTrue(x < Board.RIGTHBOARD && x > Board.LEFTBOARD);
+		assertTrue(y < Board.TOPBOARD && y > Board.BOTTOMBOARD);
 	}
 
 	public int getX() {
@@ -77,6 +79,19 @@ public class Ball {
 
 	public Image getImage() {
 		return image;
+	}
+	
+	public class Hilo extends Thread {
+		Bola bola;
+		public Hilo(Ball bola){
+			this.bola=bola;
+		}
+		
+		public void run(){
+			try{
+				bola.mueve();
+			}catch(InterruptedException e);
+		}
 	}
 
 }
