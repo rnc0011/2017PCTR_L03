@@ -17,7 +17,7 @@ public class Billiards extends JFrame {
 	public static int Height = 600;
 
 	private JButton b_start, b_stop;
-
+	
 	private Board board;
 
 	// TODO update with number of group label. See practice statement.
@@ -68,7 +68,8 @@ public class Billiards extends JFrame {
 				try {
 					for(;;) {
 						bola.move();
-						board.paint();
+						bola.reflect();
+						board.paint(getGraphics());
 					}
 				} catch (InterruptedException e){
 					return;
