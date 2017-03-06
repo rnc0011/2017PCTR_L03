@@ -3,7 +3,7 @@ package p012;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 //TODO Transform the code to be used safely in a concurrent context.  
-public class Ball implements Runnable{
+public class Ball {
 	// TODO Find an archive named Ball.png
 	private String Ball = "Ball.png";
 
@@ -31,6 +31,8 @@ public class Ball implements Runnable{
 		x += dx;
 		y += dy;
 		// TODO Check postcondition
+		assertTrue(x < Board.RIGTHBOARD && x > Board.LEFTBOARD);
+		assertTrue(y < Board.TOPBOARD && y > Board.BOTTOMBOARD);
 	}
 
 	public void reflect() {
