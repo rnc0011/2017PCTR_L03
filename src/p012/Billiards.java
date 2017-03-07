@@ -99,7 +99,7 @@ public class Billiards extends JFrame {
 			if(threads != null){
 				for(int i = 0; i < N_BALL; i++){
 					threads[i].interrupt();
-					threads = null;
+					threads[i] = null;
 				}
 			}
 		}
