@@ -24,7 +24,7 @@ public class Billiards extends JFrame {
 	private final int N_BALL = 3 + 3;
 	
 	private Ball[] balls = new Ball[this.N_BALL];
-	protected Thread[] threads;
+	protected Thread[] threads = new Thread[this.N_BALL];
 
 	public Billiards() {
 
@@ -70,7 +70,7 @@ public class Billiards extends JFrame {
 						bola.move();
 						bola.reflect();
 						board.repaint();
-						Thread.sleep(100);
+						Thread.sleep(10);
 					}
 				}catch(InterruptedException e){
 					return ;
@@ -80,31 +80,15 @@ public class Billiards extends JFrame {
 		return new Thread (bucle);
 	}
 	
-	public synchronized void start () {
-		if (threads == null) {
-			this.initBalls();
-			this.board.setBalls(balls);
-			for (int i = 0; i < this.N_BALL;i++){
-				this.threads[i] = makeThread(balls[i]);
-				this.threads[i].start(); 
-			}
-		} 
-	}
-	
-	public synchronized void stop() {
-		if (threads != null) {
-			for (int i = 0; i < threads.length; i++){
-				threads[i].interrupt();
-				threads = null;
-			}
-		}
-	}
-	
 	private class StartListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Code is executed when start button is pushed
-			start();
+			board.setBalls(balls);
+			for(int i = 0; i < N_BALL; i++){
+				threads[i] = makeThread(balls[i]);
+				threads[i].start();
+			}
 		}
 	}
 
@@ -112,7 +96,12 @@ public class Billiards extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Code is executed when stop button is pushed
-			stop();
+			if(threads != null){
+				for(int i = 0; i < N_BALL; i++){
+					threads[i].interrupt();
+					threads = null;
+				}
+			}
 		}
 	}
 
