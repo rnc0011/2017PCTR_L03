@@ -31,8 +31,10 @@ public class Ball {
 		x += dx;
 		y += dy;
 		// TODO Check postcondition
-		assert(x < Board.RIGHTBOARD && x > Board.LEFTBOARD);
-		assert(y < Board.TOPBOARD && y > Board.BOTTOMBOARD);
+		assert x < Board.RIGHTBOARD;
+		assert x > Board.LEFTBOARD;
+		assert y < Board.TOPBOARD; 
+		assert y > Board.BOTTOMBOARD;
 	}
 
 	public synchronized void reflect() {
@@ -50,8 +52,10 @@ public class Ball {
 		}
 		
 		// TODO Check postcondition
-		assert(x < Board.RIGHTBOARD && x > Board.LEFTBOARD);
-		assert(y < Board.TOPBOARD && y > Board.BOTTOMBOARD);
+		assert x < Board.RIGHTBOARD;
+		assert x > Board.LEFTBOARD;
+		assert y < Board.TOPBOARD; 
+		assert y > Board.BOTTOMBOARD;
 	}
 
 	public int getX() {
