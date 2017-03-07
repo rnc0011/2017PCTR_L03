@@ -23,8 +23,8 @@ public class Billiards extends JFrame {
 	// TODO update with number of group label. See practice statement.
 	private final int N_BALL = 3 + 3;
 	
-	private Ball[N_BALL] balls = new Ball[this.N_BALL];
-	protected Thread[N_BALL] threads = new Thread[this.N_BALL];
+	private Ball[] balls = new Ball[this.N_BALL];
+	protected Thread[] threads;
 
 	public Billiards() {
 
@@ -57,7 +57,7 @@ public class Billiards extends JFrame {
 	}
 
 	private void initBalls() {
-		for (i = 0; i < this.N_BALL; i++){
+		for (int i = 0; i < this.N_BALL; i++){
 			balls[i] = new Ball();
 		}
 	}
@@ -65,14 +65,15 @@ public class Billiards extends JFrame {
 	protected Thread makeThread (final Ball bola){
 		Runnable bucle = new Runnable() {
 			public void run(){
-				try {
+				try{
 					for(;;) {
 						bola.move();
 						bola.reflect();
-						board.paint(getGraphics());
+						board.repaint();
+						Thread.sleep(100);
 					}
-				} catch (InterruptedException e){
-					return;
+				}catch(InterruptedException e){
+					return ;
 				}
 			}
 		};
@@ -84,7 +85,7 @@ public class Billiards extends JFrame {
 			this.initBalls();
 			this.board.setBalls(balls);
 			for (int i = 0; i < this.N_BALL;i++){
-				this.threads[i] = makeThread(balls[i])
+				this.threads[i] = makeThread(balls[i]);
 				this.threads[i].start(); 
 			}
 		} 
@@ -92,22 +93,18 @@ public class Billiards extends JFrame {
 	
 	public synchronized void stop() {
 		if (threads != null) {
-			for (int i; i < threads.lenght; i++){
-				threads[1].interrupt();
+			for (int i = 0; i < threads.length; i++){
+				threads[i].interrupt();
 				threads = null;
 			}
 		}
-	}
-	
-	public void finalize(){
-		this.stop();
 	}
 	
 	private class StartListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Code is executed when start button is pushed
-			this.start();
+			start();
 		}
 	}
 
@@ -115,7 +112,7 @@ public class Billiards extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Code is executed when stop button is pushed
-			this.finalize();
+			stop();
 		}
 	}
 
