@@ -23,7 +23,9 @@ public class Billiards extends JFrame {
 	// TODO update with number of group label. See practice statement.
 	private final int N_BALL = 3 + 3;
 	
+	// Vector en el que se van a guardar las bolas
 	private Ball[] balls = new Ball[this.N_BALL];
+	// Vector en el que se van a guardar los hilos
 	protected Thread[] threads = new Thread[this.N_BALL];
 
 	public Billiards() {
@@ -56,12 +58,28 @@ public class Billiards extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Método que inicializa el vector de bolas.
+	 * 
+	 * @author Raúl Negro Carpintero
+	 * @auhtor Mario Núñez Izquierdo
+	 * @param -
+	 * @return -
+	 */
 	private void initBalls() {
 		for (int i = 0; i < this.N_BALL; i++){
 			balls[i] = new Ball();
 		}
 	}
 	
+	/**
+	 * Método que crea e inicializa los hilos.
+	 * 
+	 * @author Raúl Negro Carpintero
+	 * @author Mario Núñez Izquierdo
+	 * @param bola
+	 * @return Thread
+	 */
 	protected Thread makeThread (final Ball bola){
 		Runnable bucle = new Runnable() {
 			public void run(){
@@ -80,8 +98,23 @@ public class Billiards extends JFrame {
 		return new Thread (bucle);
 	}
 	
+	/**
+	 * Clase del botón Empezar.
+	 * 
+	 * @author Raúl Negro Carpintero
+	 * @author Mario Núñez Izquierdo
+	 *
+	 */
 	private class StartListener implements ActionListener {
 		@Override
+		/**
+		 * Método del botón Empezar.
+		 * 
+		 * @author Raúl Negro Carpintero
+		 * @auhtor Mario Núñez Izquierdo
+		 * @param arg0
+		 * @return -
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Code is executed when start button is pushed
 			board.setBalls(balls);
@@ -92,8 +125,23 @@ public class Billiards extends JFrame {
 		}
 	}
 
+	/**
+	 * Clase del botón Parar.
+	 * 
+	 * @author Raúl Negro Carpintero
+	 * @author Mario Núñez Izquierdo
+	 *
+	 */
 	private class StopListener implements ActionListener {
 		@Override
+		/**
+		 * Método del botón Parar.
+		 * 
+		 * @author Raúl Negro Carpintero
+		 * @auhtor Mario Núñez Izquierdo
+		 * @param arg0
+		 * @return -
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Code is executed when stop button is pushed
 			if(threads != null){
